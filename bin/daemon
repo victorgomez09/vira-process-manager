@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+const ViraPM = require('../');
+
+const instance = new ViraPM.daemon();
+
+process.on('SIGTERM', () => {
+    instance.killDaemon();
+});
+
+process.on('SIGINT', () => {
+    instance.killDaemon();
+});
+
+instance.on('kill', () => {
+    log("Daemon", "Daemon stopping.");
+});
+
+instance.on('logger-output', log.bind('Logger'));
+
+process.on('unhandledRejection', (error) => {
+    throw error;
+});
+
+process.on('uncaughtException', function (error) {
+    err("Daemon", error.stack);
+
+    instance.close();
+    process.exit(1);
+});
+
+run();
+
+async function run() {
+    await instance.loadBuiltins();
+    await instance.listen(process.argv[2]);
+
+    log("Daemon", `Daemon ${ViraPM.version} running.`);
+
+    if (Object.prototype.hasOwnProperty.call(process, 'send')) {
+        process.send('ready');
+    }
+}
+
+function err(...args) {
+    console.error(makeLogLine(args)); // eslint-disable-line no-console
+}
+
+function log(...args) {
+    console.log(makeLogLine(args)); // eslint-disable-line no-console
+}
+
+function makeLogLine(args) {
+    const last = args[args.length - 1];
+    const pre = `[${args.slice(0, args.length - 1).join('] [')}] `;
+
+    return pre + last;
+}

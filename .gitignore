@@ -1,0 +1,7 @@
+node_modules
+yarn-error.log
+yarn.lock
+*.swp
+examples/log.txt
+.nyc_output
+coverage

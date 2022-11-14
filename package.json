@@ -1,0 +1,102 @@
+{
+  "name": "vira-pm",
+  "version": "2.25.2",
+  "author": "Víctor Gómez",
+  "description": "A NodeJS Process Manager",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorgomez09/vira-pm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/victorgomez09/vira-pm/issues"
+  },
+  "homepage": "https://github.com/victorgomez09/vira-pm#readme",
+  "keywords": [
+    "process manager",
+    "process",
+    "manager",
+    "graceful",
+    "restarts",
+    "pm2",
+    "cli",
+    "fault tolerant",
+    "forever",
+    "load balancer",
+    "production",
+    "runtime",
+    "load-balancer",
+    "Keep process alive",
+    "autorestart",
+    "daemon",
+    "vira-pm",
+    "ViraPM",
+    "supervisor",
+    "supervisord",
+    "load balancer",
+    "load",
+    "balancer"
+  ],
+  "directories": {
+    "doc": "doc",
+    "example": "examples",
+    "lib": "lib",
+    "test": "test"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "./bin/cli",
+    "build-doc": "./doc/build.js",
+    "lint": "eslint index.js examples config doc test lib bin/*",
+    "test": "mocha --timeout 5000ms --slow 1000ms . test/tests",
+    "test-coverage": "nyc --reporter=html mocha --timeout 10000ms --slow 2000ms . test/tests",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "loc": "find bin/* lib config -type f | xargs cat | grep --invert-match -P \"^[/*{}(),;\\[\\] ]*$$\" | wc -l",
+    "autofix": "eslint --fix index.js examples config doc test lib bin/*"
+  },
+  "bin": {
+    "vira-pm": "./bin/cli",
+    "vira-pm-daemon": "./bin/daemon"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "command-line-args": "^5.1.1",
+    "command-line-usage": "^6.1.1",
+    "deep-equal": "^2.0.5",
+    "humanize-duration": "^3.25.1",
+    "joi": "^17.3.0",
+    "lockfile": "^1.0.4",
+    "mkdirp": "^1.0.4",
+    "pidusage": "^3.0.2",
+    "read-package-config": "^1.0.2",
+    "semver": "^7.3.4",
+    "stable": "^0.1.8",
+    "strip-ansi": "^6.0.0",
+    "table": "^6.0.7"
+  },
+  "nyc": {
+    "include": [
+      "lib",
+      "loggers",
+      "index.js"
+    ],
+    "exclude": [
+      "lib/cli"
+    ]
+  },
+  "devDependencies": {
+    "ansi-to-html": "*",
+    "chai": "",
+    "chai-as-promised": "",
+    "coveralls": "*",
+    "eslint": "*",
+    "eslint-plugin-mocha": "*",
+    "mocha": "*",
+    "nyc": "*",
+    "rmdir": "",
+    "samsam": "",
+    "tmp": "*",
+    "turndown": "*"
+  }
+}
